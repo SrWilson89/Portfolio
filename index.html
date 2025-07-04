@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portfolio - Desarrollador Web</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .header-info h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-info p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .badge {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #f8fafc;
+            color: #334155;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 1rem;
+        }
+
+        .card-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .icon-container {
+            padding: 0.5rem;
+            background: #f1f5f9;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .icon-container {
+            background: #dbeafe;
+        }
+
+        .project-card:hover .project-icon {
+            color: #2563eb;
+        }
+
+        .project-icon {
+            font-size: 1.25rem;
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+
+        .project-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .external-link {
+            font-size: 1rem;
+            color: #94a3b8;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .external-link {
+            color: #64748b;
+        }
+
+        .card-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .project-description {
+            color: #64748b;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .project-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Add Project Section */
+        .add-project {
+            background: white;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .add-project h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .add-project p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: #475569;
+            overflow-x: auto;
+        }
+
+        .code-inline {
+            background: #f1f5f9;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: #64748b;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+                color: #e2e8f0;
+            }
+
+            header {
+                background: rgba(15, 23, 42, 0.9);
+                border-bottom-color: #334155;
+            }
+
+            .header-info h1 {
+                color: white;
+            }
+
+            .header-info p {
+                color: #94a3b8;
+            }
+
+            .badge {
+                background: #1e293b;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+
+            .btn {
+                background: #1e293b;
+                border-color: #334155;
+                color: #cbd5e1;
+            }
+
+            .btn:hover {
+                background: #334155;
+                color: #e2e8f0;
+            }
+
+            .project-card {
+                background: #1e293b;
+                border-color: #334155;
+            }
+
+            .project-title {
+                color: white;
+            }
+
+            .icon-container {
+                background: #334155;
+            }
+
+            .project-card:hover .icon-container {
+                background: #1e40af;
+            }
+
+            .tag {
+                background: #334155;
+                color: #cbd5e1;
+            }
+
+            .add-project {
+                background: #1e293b;
+                border-color: #475569;
+            }
+
+            .add-project h3 {
+                color: white;
+            }
+
+            .code-block {
+                background: #0f172a;
+                color: #cbd5e1;
+            }
+
+            .code-inline {
+                background: #334155;
+            }
+
+            footer {
+                background: rgba(15, 23, 42, 0.9);
+                border-top-color: #334155;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-info">
+                    <h1>Mi Portfolio</h1>
+                    <p>Colección de mis proyectos web</p>
+                </div>
+                <div class="header-actions">
+                    <div class="badge">
+                        <span id="project-count">5</span> Proyectos
+                    </div>
+                    <a href="https://github.com/srwilson89" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projects will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Add Project Section -->
+            <!-- <div class="add-project">
+                <h3>Añadir Nuevo Proyecto</h3>
+                <p>Para añadir un nuevo proyecto, usa la función <span class="code-inline">addProject()</span> desde JavaScript:</p>
+                <div class="code-block">
+addProject({
+  name: "Nuevo Proyecto",
+  url: "https://tu-url.com",
+  description: "Descripción del proyecto",
+  icon: "fas fa-code",
+  tags: ["React", "TypeScript"]
+})
+                </div>
+            </div> -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Mi Portfolio. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lista de proyectos - fácil de modificar desde JavaScript
+        const projectsData = [
+            {
+                id: 1,
+                name: "Previo",
+                url: "https://srwilson89.github.io/previo/",
+                description: "Proyecto de vista previa y demostración",
+                icon: "fas fa-globe",
+                tags: ["Web", "Demo"],
+            },
+            {
+                id: 2,
+                name: "Error 404",
+                url: "https://srwilson89.github.io/error404/",
+                description: "Página de error personalizada con diseño creativo",
+                icon: "fas fa-exclamation-triangle",
+                tags: ["UI/UX", "Error Page"],
+            },
+            {
+                id: 3,
+                name: "Reparaciones",
+                url: "https://srwilson89.github.io/Reparaciones/",
+                description: "Sistema de gestión de reparaciones",
+                icon: "fas fa-wrench",
+                tags: ["Sistema", "Gestión"],
+            },
+            {
+                id: 4,
+                name: "Warhammer 40K Shooter",
+                url: "https://srwilson89.github.io/Warhammer40KShooter/",
+                description: "Juego de disparos ambientado en el universo Warhammer 40K",
+                icon: "fas fa-gamepad",
+                tags: ["Juego", "JavaScript"],
+            },
+            {
+                id: 5,
+                name: "SQL Manager",
+                url: "https://srwilson89.github.io/SQL/",
+                description: "Herramienta para gestión y consultas SQL",
+                icon: "fas fa-database",
+                tags: ["Base de Datos", "SQL"],
+            },
+        ];
+
+        let projects = [...projectsData];
+
+        // Función para renderizar proyectos
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+
+            projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.onclick = () => openProject(project.url);
+
+                projectCard.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-header-top">
+                            <div class="card-icon-title">
+                                <div class="icon-container">
+                                    <i class="${project.icon} project-icon"></i>
+                                </div>
+                                <h3 class="project-title">${project.name}</h3>
+                            </div>
+                            <i class="fas fa-external-link-alt external-link"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p class="project-description">${project.description}</p>
+                        <div class="tags">
+                            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <button class="project-btn">
+                            <i class="fas fa-globe"></i>
+                            Ver Proyecto
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(projectCard);
+            });
+
+            // Actualizar contador
+            document.getElementById('project-count').textContent = projects.length;
+        }
+
+        // Función para añadir nuevos proyectos
+        function addProject(newProject) {
+            projects.push({
+                ...newProject,
+                id: Date.now()
+            });
+            renderProjects();
+        }
+
+        // Función para abrir enlace en nueva pestaña
+        function openProject(url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Animaciones de entrada
+        function animateCards() {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProjects();
+            setTimeout(animateCards, 100);
+        });
+
+        // Exponer funciones globalmente para uso en consola
+        window.addProject = addProject;
+        window.projects = projects;
+    </script>
+</body>
+</html>
