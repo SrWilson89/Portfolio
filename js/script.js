@@ -55,6 +55,14 @@ const projectsData = [
         description: "Portfolio de diseño web profesional",
         icon: "fas fa-paint-brush",
         tags: ["Diseño", "Portfolio"],
+    },
+    {
+        id: 8, // Puedes cambiar este ID si ya tienes uno con el número 8
+        name: "Notas",
+        url: "https://srwilson89.github.io/notas/",
+        description: "Aplicación para la gestión de notas",
+        icon: "fas fa-clipboard",
+        tags: ["Productividad", "Notas"],
     }
 ];
 
