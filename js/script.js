@@ -57,7 +57,7 @@ const projectsData = [
         tags: ["Diseño", "Portfolio"],
     },
     {
-        id: 8, // Puedes cambiar este ID si ya tienes uno con el número 8
+        id: 8,
         name: "Notas",
         url: "https://srwilson89.github.io/notas/",
         description: "Aplicación para la gestión de notas",
@@ -68,79 +68,140 @@ const projectsData = [
 
 let projects = [...projectsData];
 
-// Función para renderizar proyectos
+// Función para renderizar proyectos de forma eficiente
 function renderProjects() {
     const grid = document.getElementById('projects-grid');
-    grid.innerHTML = '';
-
+    const fragment = document.createDocumentFragment();
+    
     projects.forEach(project => {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
-        projectCard.onclick = () => openProject(project.url);
-
-        projectCard.innerHTML = `
-            <div class="card-header">
-                <div class="card-header-top">
-                    <div class="card-icon-title">
-                        <div class="icon-container">
-                            <i class="${project.icon} project-icon"></i>
-                        </div>
-                        <h3 class="project-title">${project.name}</h3>
-                    </div>
-                    <i class="fas fa-external-link-alt external-link"></i>
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="preview-container">
-                    <iframe class="preview-iframe" src="${project.url}" loading="lazy" title="Preview of ${project.name}"></iframe>
-                    <div class="preview-overlay">
-                        <span class="preview-text">Haz clic para ver el proyecto</span>
-                    </div>
-                </div>
-                <p class="project-description">${project.description}</p>
-                <div class="tags">
-                    ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                </div>
-                <button class="project-btn">
-                    <i class="fas fa-globe"></i>
-                    Ver Proyecto
-                </button>
-            </div>
-        `;
-
-        grid.appendChild(projectCard);
+        
+        const cardHeader = document.createElement('div');
+        cardHeader.className = 'card-header';
+        
+        const cardHeaderTop = document.createElement('div');
+        cardHeaderTop.className = 'card-header-top';
+        
+        const cardIconTitle = document.createElement('div');
+        cardIconTitle.className = 'card-icon-title';
+        
+        const iconContainer = document.createElement('div');
+        iconContainer.className = 'icon-container';
+        
+        const projectIcon = document.createElement('i');
+        projectIcon.className = `${project.icon} project-icon`;
+        
+        const projectTitle = document.createElement('h3');
+        projectTitle.className = 'project-title';
+        projectTitle.textContent = project.name;
+        
+        const externalLink = document.createElement('i');
+        externalLink.className = 'fas fa-external-link-alt external-link';
+        
+        iconContainer.appendChild(projectIcon);
+        cardIconTitle.append(iconContainer, projectTitle);
+        cardHeaderTop.append(cardIconTitle, externalLink);
+        cardHeader.appendChild(cardHeaderTop);
+        
+        const cardContent = document.createElement('div');
+        cardContent.className = 'card-content';
+        
+        const previewContainer = document.createElement('div');
+        previewContainer.className = 'preview-container';
+        
+        const placeholder = document.createElement('div');
+        placeholder.className = 'preview-placeholder';
+        placeholder.textContent = project.name;
+        
+        const iframe = document.createElement('iframe');
+        iframe.className = 'preview-iframe';
+        iframe.loading = 'lazy';
+        iframe.title = `Preview of ${project.name}`;
+        iframe.dataset.src = project.url;
+        iframe.style.display = 'none';
+        
+        const previewOverlay = document.createElement('div');
+        previewOverlay.className = 'preview-overlay';
+        
+        const previewText = document.createElement('span');
+        previewText.className = 'preview-text';
+        previewText.textContent = 'Haz clic para ver el proyecto';
+        
+        previewOverlay.appendChild(previewText);
+        previewContainer.append(placeholder, iframe, previewOverlay);
+        
+        const projectDescription = document.createElement('p');
+        projectDescription.className = 'project-description';
+        projectDescription.textContent = project.description;
+        
+        const tags = document.createElement('div');
+        tags.className = 'tags';
+        
+        project.tags.forEach(tagText => {
+            const tag = document.createElement('span');
+            tag.className = 'tag';
+            tag.textContent = tagText;
+            tags.appendChild(tag);
+        });
+        
+        const projectBtn = document.createElement('button');
+        projectBtn.className = 'project-btn';
+        
+        const btnIcon = document.createElement('i');
+        btnIcon.className = 'fas fa-globe';
+        
+        const btnText = document.createElement('span');
+        btnText.textContent = 'Ver Proyecto';
+        
+        projectBtn.append(btnIcon, btnText);
+        cardContent.append(previewContainer, projectDescription, tags, projectBtn);
+        projectCard.append(cardHeader, cardContent);
+        
+        // Event listeners
+        projectCard.addEventListener('click', () => openProject(project.url));
+        projectBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openProject(project.url);
+        });
+        
+        fragment.appendChild(projectCard);
     });
-
-    // Actualizar contador
+    
+    grid.appendChild(fragment);
     document.getElementById('project-count').textContent = projects.length;
+    
+    // Iniciar observador para lazy loading de iframes
+    initIframeObserver();
 }
 
-// Función para añadir nuevos proyectos
-function addProject(newProject) {
-    projects.push({
-        ...newProject,
-        id: Date.now()
+// Observador para carga diferida de iframes
+function initIframeObserver() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target.querySelector('.preview-iframe');
+                if (iframe && iframe.dataset.src) {
+                    iframe.src = iframe.dataset.src;
+                    iframe.style.display = 'block';
+                    const placeholder = iframe.previousElementSibling;
+                    if (placeholder && placeholder.classList.contains('preview-placeholder')) {
+                        placeholder.style.display = 'none';
+                    }
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }, {rootMargin: '100px'});
+
+    document.querySelectorAll('.project-card').forEach(card => {
+        observer.observe(card);
     });
-    renderProjects();
 }
 
-// Función para abrir enlace en nueva pestaña
+// Función para abrir enlace
 function openProject(url) {
     window.open(url, '_blank', 'noopener,noreferrer');
-}
-
-// Animaciones de entrada
-function animateCards() {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.transition = 'all 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
 }
 
 // Actualizar año en el footer
@@ -148,13 +209,20 @@ function updateYear() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
 }
 
-// Inicializar cuando se carga la página
+// Inicialización
 document.addEventListener('DOMContentLoaded', function() {
     renderProjects();
     updateYear();
-    setTimeout(animateCards, 100);
 });
 
-// Exponer funciones globalmente para uso en consola
-window.addProject = addProject;
-window.projects = projects;
+// API para añadir proyectos desde consola (solo desarrollo)
+if (process.env.NODE_ENV === 'development') {
+    window.addProject = function(newProject) {
+        projects.push({
+            ...newProject,
+            id: Date.now()
+        });
+        renderProjects();
+    };
+    window.projects = projects;
+}
