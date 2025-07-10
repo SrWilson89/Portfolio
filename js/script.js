@@ -70,7 +70,7 @@ const projectsData = [
         url: "https://srwilson89.github.io/Calculadora/",
         description: "Una aplicación de calculadora sencilla", // Puedes ajustar la descripción
         icon: "fas fa-calculator", // Icono sugerido para una calculadora
-        tags: ["Herramienta", "JavaScript", "Cálculo"], // Tags sugeridos
+        tags: ["Herramienta", "Cálculo"], // Tags sugeridos
     }
 ];
 
