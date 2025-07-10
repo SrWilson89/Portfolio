@@ -63,6 +63,14 @@ const projectsData = [
         description: "Aplicación para la gestión de notas",
         icon: "fas fa-clipboard",
         tags: ["Productividad", "Notas"],
+    },
+    {
+        id: 9, // Nuevo ID, asegúrate de que sea único
+        name: "Calculadora",
+        url: "https://srwilson89.github.io/Calculadora/",
+        description: "Una aplicación de calculadora sencilla", // Puedes ajustar la descripción
+        icon: "fas fa-calculator", // Icono sugerido para una calculadora
+        tags: ["Herramienta", "JavaScript", "Cálculo"], // Tags sugeridos
     }
 ];
 
