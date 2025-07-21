@@ -71,6 +71,14 @@ const projectsData = [
         description: "Una aplicación de calculadora sencilla", // Puedes ajustar la descripción
         icon: "fas fa-calculator", // Icono sugerido para una calculadora
         tags: ["Herramienta", "Cálculo"], // Tags sugeridos
+    },
+    {
+        id: 10, // Nuevo ID para Doom, asegúrate de que sea único y consecutivo
+        name: "Doom Prototype",
+        url: "https://srwilson89.github.io/doom/",
+        description: "Prototipo de un juego FPS estilo Doom", // Descripción sugerida
+        icon: "fas fa-skull-crossbones", // Icono sugerido (calavera y huesos cruzados)
+        tags: ["Juego", "FPS", "Doom", "JavaScript"], // Tags relevantes
     }
 ];
 
