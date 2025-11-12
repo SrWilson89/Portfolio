@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separador de Código Web Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+    <div id="app" class="p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <svg class="w-12 h-12 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <h1 class="text-4xl font-bold text-gray-800">Separador de Código Web</h1>
+                </div>
+                <p class="text-gray-600 text-lg">
+                    Herramienta profesional para separar código web unificado en componentes optimizados
+                </p>
+            </div>
+
+            <!-- Input Section -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h2 class="text-xl font-semibold text-gray-800">Código Fuente</h2>
+                </div>
+                <textarea
+                    id="inputCode"
+                    placeholder="Pega aquí tu código HTML con CSS y JavaScript inline..."
+                    class="w-full h-64 p-4 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none font-mono text-sm resize-none"
+                ></textarea>
+                <div class="flex gap-3 mt-4">
+                    <button
+                        onclick="separateCode()"
+                        class="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Separar y Optimizar
+                    </button>
+                    <button
+                        onclick="clearAll()"
+                        class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                    >
+                        Limpiar Todo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div id="outputSection" class="space-y-6 hidden">
+                <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-800">Código Separado</h2>
+                </div>
+
+                <!-- HTML Block -->
+                <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-orange-500 to-red-500 px-4 py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            <h3 class="font-semibold text-white">HTML</h3>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="copyCode('html')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Copiar">
+                                <svg id="copyIconHtml" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="downloadCode('html')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Descargar">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm"><code id="htmlOutput" class="text-gray-800 font-mono"></code></pre>
+                        <div id="htmlStats" class="mt-2 text-xs text-gray-500"></div>
+                    </div>
+                </div>
+
+                <!-- CSS Block -->
+                <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                            </svg>
+                            <h3 class="font-semibold text-white">CSS</h3>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="copyCode('css')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Copiar">
+                                <svg id="copyIconCss" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="downloadCode('css')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Descargar">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm"><code id="cssOutput" class="text-gray-800 font-mono"></code></pre>
+                        <div id="cssStats" class="mt-2 text-xs text-gray-500"></div>
+                    </div>
+                </div>
+
+                <!-- JavaScript Block -->
+                <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-yellow-500 to-amber-500 px-4 py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <h3 class="font-semibold text-white">JavaScript</h3>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="copyCode('js')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Copiar">
+                                <svg id="copyIconJs" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="downloadCode('js')" class="p-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded transition-all" title="Descargar">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm"><code id="jsOutput" class="text-gray-800 font-mono"></code></pre>
+                        <div id="jsStats" class="mt-2 text-xs text-gray-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features (shown when no results) -->
+            <div id="featuresSection" class="grid md:grid-cols-3 gap-6 mt-12">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Separación Inteligente</h3>
+                    <p class="text-gray-600">
+                        Extrae automáticamente HTML, CSS y JavaScript de archivos unificados
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Optimización Automática</h3>
+                    <p class="text-gray-600">
+                        Formatea y limpia el código eliminando comentarios y espacios innecesarios
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Export Fácil</h3>
+                    <p class="text-gray-600">
+                        Copia o descarga cada componente por separado en un clic
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let separatedCode = { html: '', css: '', js: '' };
+
+        function optimizeCSS(css) {
+            return css
+                .replace(/\/\*[\s\S]*?\*\//g, '')
+                .replace(/\s+/g, ' ')
+                .replace(/\s*{\s*/g, ' {\n  ')
+                .replace(/;\s*/g, ';\n  ')
+                .replace(/\s*}\s*/g, '\n}\n\n')
+                .trim();
+        }
+
+        function optimizeJS(js) {
+            return js
+                .replace(/\/\/.*$/gm, '')
+                .replace(/\/\*[\s\S]*?\*\//g, '')
+                .trim();
+        }
+
+        function optimizeHTML(html) {
+            let indent = 0;
+            const lines = html.split(/>\s*</);
+            
+            const formatted = lines.map((line, i) => {
+                if (i > 0) line = '<' + line;
+                if (i < lines.length - 1) line = line + '>';
+                
+                const isClosing = line.match(/^<\//);
+                const isSelfClosing = line.match(/\/>$/);
+                
+                if (isClosing) indent--;
+                const indentation = '  '.repeat(Math.max(0, indent));
+                if (!isClosing && !isSelfClosing) indent++;
+                
+                return indentation + line.trim();
+            }).join('\n');
+
+            return formatted;
+        }
+
+        function separateCode() {
+            const input = document.getElementById('inputCode').value;
+            
+            if (!input.trim()) {
+                alert('Por favor, ingresa código para separar');
+                return;
+            }
+
+            // Extraer CSS
+            const cssRegex = /<style[^>]*>([\s\S]*?)<\/style>/gi;
+            let cssContent = '';
+            let matches = input.matchAll(cssRegex);
+            for (const match of matches) {
+                cssContent += match[1] + '\n';
+            }
+
+            // Extraer JavaScript
+            const jsRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+            let jsContent = '';
+            matches = input.matchAll(jsRegex);
+            for (const match of matches) {
+                if (!match[0].includes('src=')) {
+                    jsContent += match[1] + '\n';
+                }
+            }
+
+            // Extraer HTML
+            let htmlContent = input
+                .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+                .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+                .trim();
+
+            // Optimizar
+            separatedCode.css = optimizeCSS(cssContent);
+            separatedCode.js = optimizeJS(jsContent);
+            separatedCode.html = optimizeHTML(htmlContent);
+
+            // Mostrar resultados
+            document.getElementById('htmlOutput').textContent = separatedCode.html || 'Sin contenido';
+            document.getElementById('cssOutput').textContent = separatedCode.css || 'Sin contenido';
+            document.getElementById('jsOutput').textContent = separatedCode.js || 'Sin contenido';
+
+            // Mostrar estadísticas
+            updateStats('html', separatedCode.html);
+            updateStats('css', separatedCode.css);
+            updateStats('js', separatedCode.js);
+
+            // Mostrar sección de resultados
+            document.getElementById('outputSection').classList.remove('hidden');
+            document.getElementById('featuresSection').classList.add('hidden');
+        }
+
+        function updateStats(type, content) {
+            const lines = content ? content.split('\n').length : 0;
+            const chars = content ? content.length : 0;
+            document.getElementById(`${type}Stats`).textContent = 
+                content ? `${lines} líneas, ${chars} caracteres` : 'Vacío';
+        }
+
+        function copyCode(type) {
+            const text = separatedCode[type];
+            navigator.clipboard.writeText(text).then(() => {
+                const icon = document.getElementById(`copyIcon${type.charAt(0).toUpperCase() + type.slice(1)}`);
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                setTimeout(() => {
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>';
+                }, 2000);
+            });
+        }
+
+        function downloadCode(type) {
+            const content = separatedCode[type];
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `archivo.${type}`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+            document.getElementById('inputCode').value = '';
+            separatedCode = { html: '', css: '', js: '' };
+            document.getElementById('outputSection').classList.add('hidden');
+            document.getElementById('featuresSection').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

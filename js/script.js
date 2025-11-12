@@ -42,21 +42,19 @@ const projectsData = [
     },
     {
         id: 6,
-        name: "Generador de Contraseñas",
-        url: "https://nerd-lat-passwordgenius-1751568873968-klq0p8.netlify.app/",
+        name: "Generador",
+        url: "pasword.html",
         description: "Herramienta para generar contraseñas",
         icon: "fa-solid fa-unlock",
         tags: ["Generador", "Contraseña"],
-        isUnderDevelopment: true, // Añadido: Marcar como en desarrollo
     },
     {
         id: 7,
         name: "Diseño Web Profesional",
-        url: "https://v0-professional-web-design-gamma.vercel.app/",
+        url: "splinter.html",
         description: "Portfolio de diseño web profesional",
         icon: "fas fa-paint-brush",
         tags: ["Diseño", "Portfolio"],
-        isUnderDevelopment: true, // Añadido: Marcar como en desarrollo
     },
     {
         id: 8,
@@ -86,29 +84,14 @@ const projectsData = [
 
 let projects = [...projectsData];
 
-// Función para mostrar el mensaje de "Trabajando en ello"
-function showUnderDevelopmentMessage() {
-    alert("¡Trabajando en ello! Pronto podrás ver este proyecto completo.");
-}
-
 // Función para renderizar proyectos de forma eficiente
 function renderProjects() {
     const grid = document.getElementById('projects-grid');
-    // Limpiar grid antes de renderizar (útil para la API de desarrollo)
-    grid.innerHTML = '';
-    
     const fragment = document.createDocumentFragment();
     
     projects.forEach(project => {
-        const isDev = project.isUnderDevelopment; // Verificar si está en desarrollo
-        
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
-        
-        // Opcional: Añadir clase para estilos específicos en desarrollo
-        if (isDev) {
-            projectCard.classList.add('under-development');
-        }
         
         const cardHeader = document.createElement('div');
         cardHeader.className = 'card-header';
@@ -131,11 +114,6 @@ function renderProjects() {
         
         const externalLink = document.createElement('i');
         externalLink.className = 'fas fa-external-link-alt external-link';
-        
-        // Si está en desarrollo, podemos cambiar el icono o añadir un badge
-        if (isDev) {
-            externalLink.className = 'fas fa-code-branch external-link'; // Icono de rama (en desarrollo)
-        }
         
         iconContainer.appendChild(projectIcon);
         cardIconTitle.append(iconContainer, projectTitle);
@@ -164,13 +142,7 @@ function renderProjects() {
         
         const previewText = document.createElement('span');
         previewText.className = 'preview-text';
-        
-        // Modificar el texto del overlay
-        if (isDev) {
-            previewText.textContent = 'En Desarrollo';
-        } else {
-            previewText.textContent = 'Haz clic para ver el proyecto';
-        }
+        previewText.textContent = 'Haz clic para ver el proyecto';
         
         previewOverlay.appendChild(previewText);
         previewContainer.append(placeholder, iframe, previewOverlay);
@@ -189,52 +161,25 @@ function renderProjects() {
             tags.appendChild(tag);
         });
         
-        // Opcional: Añadir un tag de "En desarrollo"
-        if (isDev) {
-             const devTag = document.createElement('span');
-             devTag.className = 'tag development-tag';
-             devTag.textContent = 'BETA';
-             tags.appendChild(devTag);
-        }
-        
         const projectBtn = document.createElement('button');
         projectBtn.className = 'project-btn';
         
         const btnIcon = document.createElement('i');
+        btnIcon.className = 'fas fa-globe';
         
         const btnText = document.createElement('span');
-        
-        // Modificar texto y icono del botón
-        if (isDev) {
-            btnIcon.className = 'fas fa-laptop-code'; // Icono de desarrollo
-            btnText.textContent = 'En Desarrollo';
-            projectBtn.style.backgroundColor = '#ff9800'; // Estilo diferente para destacar
-            projectBtn.style.backgroundImage = 'linear-gradient(135deg, #ff9800 0%, #ff5722 100%)';
-        } else {
-            btnIcon.className = 'fas fa-globe';
-            btnText.textContent = 'Ver Proyecto';
-        }
+        btnText.textContent = 'Ver Proyecto';
         
         projectBtn.append(btnIcon, btnText);
         cardContent.append(previewContainer, projectDescription, tags, projectBtn);
         projectCard.append(cardHeader, cardContent);
         
         // Event listeners
-        if (isDev) {
-            // Mostrar mensaje de desarrollo al hacer click en la tarjeta o botón
-            projectCard.addEventListener('click', showUnderDevelopmentMessage);
-            projectBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showUnderDevelopmentMessage();
-            });
-        } else {
-            // Comportamiento normal: abrir enlace
-            projectCard.addEventListener('click', () => openProject(project.url));
-            projectBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openProject(project.url);
-            });
-        }
+        projectCard.addEventListener('click', () => openProject(project.url));
+        projectBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openProject(project.url);
+        });
         
         fragment.appendChild(projectCard);
     });
@@ -252,15 +197,6 @@ function initIframeObserver() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const iframe = entry.target.querySelector('.preview-iframe');
-                
-                // Solo cargar si no está en desarrollo
-                const project = projects.find(p => p.name === entry.target.querySelector('.project-title').textContent);
-                if (project && project.isUnderDevelopment) {
-                    // No cargar iframe, simplemente dejar el placeholder y desobservar para optimizar
-                    observer.unobserve(entry.target);
-                    return;
-                }
-                
                 if (iframe && iframe.dataset.src) {
                     iframe.src = iframe.dataset.src;
                     iframe.style.display = 'block';
