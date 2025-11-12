@@ -404,3 +404,25 @@ footer {
 ::selection {
     background: rgba(102, 126, 234, 0.3);
 }
+/* Añadir al final de styles.css o en una sección de botones */
+.project-card.under-development:hover .tag.development-tag {
+    background: #ff9800; /* Color diferente para el tag en desarrollo */
+    color: white;
+    transform: translateY(-2px);
+}
+
+.development-tag {
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+.project-card.under-development .project-btn {
+    /* Ya modificado en JS, pero puedes añadir un estilo de hover aquí */
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+}
+
+.project-card.under-development .project-btn:hover {
+    background: linear-gradient(135deg, #ff5722 0%, #ff9800 100%);
+    box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
+}
